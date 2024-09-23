@@ -55,13 +55,57 @@ class ProductController {
             return res.status(500).json({ message: 'Erro ao buscar produtos.', data: error.message });
         }
     }
+
     static async deleteProductById(req, res) {
+        const { id } = req.params;
+    
+        if (!id) {
+            return res.status(400).json({ message: 'ID do produto não fornecido.' });
+        }
+    
         try {
-            const { _id } = req.params;
+            const product = await Prod.findById(id); 
+    
+            if (!product) {
+                return res.status(404).json({ message: 'Produto não encontrado.' });
+            }
+    
+            await Prod.findByIdAndDelete(id);
+    
+            return res.status(200).send({ message: 'Produto deletado com sucesso.' });
         } catch (error) {
-            
+            return res.status(500).json({ message: 'Não foi possível deletar o produto.', data: error.message });
         }
     }
+    
+    static async updateProdById(req, res) {
+        const { id } = req.params;
+        const { name, category, price } = req.body;
+    
+        if (!id) {
+            return res.status(400).json({ message: 'ID do produto não fornecido.' });
+        }
+    
+        try {
+            const product = await Prod.findById(id);
+            
+            if (!product) {
+                return res.status(404).json({ message: 'Produto não encontrado.' });
+            }
+    
+            await Prod.findByIdAndUpdate(id, {
+                name,
+                category,
+                price,
+                updatedAt: Date.now(),
+                removedAt: null
+            });
+    
+            return res.status(200).send({ message: 'Produto modificado com sucesso.' });
+        } catch (error) {
+            return res.status(500).json({ message: 'Não foi possível modificar o produto.', data: error.message });
+        }
+    }    
 }
 
 module.exports = ProductController;
