@@ -1,3 +1,5 @@
+require("dotenv/config")
+
 const User = require('../model/user');
 const Table = require('../model/table'); // Import the Table model
 const jwt = require('jsonwebtoken');
@@ -25,7 +27,7 @@ class ClientController {
             }
 
             // Generate a JWT for the user
-            const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ id: user._id, role: user.role }, process.env.SECRET, { expiresIn: '1h' });
 
             // Return the table information along with the token
             res.json({ 
