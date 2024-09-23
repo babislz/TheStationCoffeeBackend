@@ -46,6 +46,22 @@ class ProductController {
             return res.status(500).json({ message: 'Não foi possível encontrar o produto.', data: error.message });
         }
     }
+
+    static async getAllProducts(req, res) {
+        try {
+            const products = await Prod.find(); 
+            return res.status(200).json(products);
+        } catch (error) {
+            return res.status(500).json({ message: 'Erro ao buscar produtos.', data: error.message });
+        }
+    }
+    static async deleteProductById(req, res) {
+        try {
+            const { _id } = req.params;
+        } catch (error) {
+            
+        }
+    }
 }
 
 module.exports = ProductController;
