@@ -8,7 +8,7 @@ module.exports = function(app) {
     app 
         .use(express.json())
         .use(authRouter)
-        .use(productRouter)
         .use(clientRouter)
         .use(tableRouter)
+        .use('/api/product', productRouter)
 }
