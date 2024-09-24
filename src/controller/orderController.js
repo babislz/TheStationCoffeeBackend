@@ -11,17 +11,22 @@ class OrderController {
     }
 
     try {
-        
         const table = await Table.findById(tableId);
         if (!table) {
             return res.status(404).json({ mesasge: "Mesa não encontrada" });
         }
+
+        let order = await Order.findOne({table: tableId})
         
-        const order = new Order({
-            table: table,
-            products: products,
-            active: true
-        })
+        if (!order) {
+            order = new Order({
+                table: table,
+                products: products,
+                active: true
+            })
+        } else {
+            order.products.push(...products)
+        }
 
         await order.save();
         return res.status(201).json({ order });
