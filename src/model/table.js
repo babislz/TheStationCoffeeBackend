@@ -7,4 +7,6 @@ const tableSchema = new mongoose.Schema({
     assignedUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 
-module.exports = mongoose.model('Table', tableSchema);
+const Table =  mongoose.model('Table', tableSchema);
+exports.Table = Table;
+exports.tableSchema = tableSchema;

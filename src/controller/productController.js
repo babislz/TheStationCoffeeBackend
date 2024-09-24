@@ -1,16 +1,16 @@
-const Prod = require('../model/product');
+const { Product } = require('../model/product');
 
 class ProductController {
     static async create(req, res) {
         const { name, category, price } = req.body;
 
         try {
-            const productExists = await Prod.findOne({ name });
+            const productExists = await Product.findOne({ name });
             if (productExists) {
                 return res.status(422).json({ message: 'O produto já existe.' });
             }
 
-            const prod = new Prod({
+            const prod = new Product({
                 name,
                 category,
                 price,
@@ -19,7 +19,7 @@ class ProductController {
                 removedAt: null
             });
 
-            const newProduct = await Prod.create(prod);
+            const newProduct = await Product.create(prod);
             return res.status(201).json({ message: 'Produto criado com sucesso.', product: newProduct });
 
         } catch (error) {
@@ -35,7 +35,7 @@ class ProductController {
         }
 
         try {
-            const product = await Prod.findById(id);
+            const product = await Product.findById(id);
 
             if (!product) {
                 return res.status(404).json({ message: 'Produto não encontrado.' });
@@ -49,7 +49,7 @@ class ProductController {
 
     static async getAllProducts(req, res) {
         try {
-            const products = await Prod.find(); 
+            const products = await Product.find(); 
             return res.status(200).json(products);
         } catch (error) {
             return res.status(500).json({ message: 'Erro ao buscar produtos.', data: error.message });
@@ -64,13 +64,13 @@ class ProductController {
         }
     
         try {
-            const product = await Prod.findById(id); 
+            const product = await Product.findById(id); 
     
             if (!product) {
                 return res.status(404).json({ message: 'Produto não encontrado.' });
             }
     
-            await Prod.findByIdAndDelete(id);
+            await Product.findByIdAndDelete(id);
     
             return res.status(200).send({ message: 'Produto deletado com sucesso.' });
         } catch (error) {
@@ -87,13 +87,13 @@ class ProductController {
         }
     
         try {
-            const product = await Prod.findById(id);
+            const product = await Product.findById(id);
             
             if (!product) {
                 return res.status(404).json({ message: 'Produto não encontrado.' });
             }
     
-            await Prod.findByIdAndUpdate(id, {
+            await Product.findByIdAndUpdate(id, {
                 name,
                 category,
                 price,

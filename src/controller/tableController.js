@@ -1,4 +1,4 @@
-const Table = require('../model/table');
+const { Table } = require('../model/table');
 
 class TableController {
     static async create(req, res) {

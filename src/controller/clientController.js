@@ -1,7 +1,7 @@
 require("dotenv/config")
 
 const User = require('../model/user');
-const Table = require('../model/table'); // Import the Table model
+const { Table } = require('../model/table'); // Import the Table model
 const jwt = require('jsonwebtoken');
 
 class ClientController {
