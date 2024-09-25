@@ -2,7 +2,7 @@ const { Product } = require('../model/product');
 
 class ProductController {
     static async create(req, res) {
-        const { name, category, price } = req.body;
+        const { name, category, price, image } = req.body;
 
         try {
             const productExists = await Product.findOne({ name });
@@ -14,6 +14,7 @@ class ProductController {
                 name,
                 category,
                 price,
+                image,
                 createdAt: Date.now(),
                 updatedAt: Date.now(),
                 removedAt: null
@@ -97,6 +98,7 @@ class ProductController {
                 name,
                 category,
                 price,
+                image,
                 updatedAt: Date.now(),
                 removedAt: null
             });
