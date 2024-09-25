@@ -2,6 +2,7 @@ const { Product } = require('../model/product');
 
 class ProductController {
     static async create(req, res) {
+        console.log(req.body)
         const { name, category, price, image } = req.body;
 
         try {
