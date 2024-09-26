@@ -79,6 +79,16 @@ class ProductController {
             return res.status(500).json({ message: 'Não foi possível deletar o produto.', data: error.message });
         }
     }
+
+    static async deleteAllProducts(req, res) {
+        try {
+            await Product.deleteMany();
+            return res.status(200).send({ message: 'Produtos deletados com sucesso.' });
+        } catch (error) {
+            return res.status(500).json({ message: 'Não foi possível deletar os produtos.', data: error.message });
+        }
+    }
+    
     
     static async updateProdById(req, res) {
         const { id } = req.params;

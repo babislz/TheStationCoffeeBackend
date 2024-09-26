@@ -11,6 +11,7 @@ productRouter
     .get('/:id', authorize('admin'), productController.getProdById)
     .get('', authorize(['admin', 'staff', 'client']), productController.getAllProducts)
     .delete('/:id', authorize('admin'), productController.deleteProductById)
+    .delete('', authorize('admin'), productController.deleteAllProducts)
     .put('/:id', authorize('admin'), productController.updateProdById)
 
 module.exports = productRouter;
