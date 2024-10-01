@@ -2,8 +2,12 @@ const { Product } = require('../model/product');
 
 class ProductController {
     static async create(req, res) {
-        console.log(req.body)
-        const { name, category, price, image } = req.body;
+        const { name, category, price } = req.body;
+        let image;
+
+        if (req.file) {
+            image = req.file.path;
+        }
 
         try {
             const productExists = await Product.findOne({ name });
@@ -93,6 +97,11 @@ class ProductController {
     static async updateProdById(req, res) {
         const { id } = req.params;
         const { name, category, price } = req.body;
+        let image;
+    
+        if (req.file) {
+            image = req.file.path;
+        }
     
         if (!id) {
             return res.status(400).json({ message: 'ID do produto não fornecido.' });
@@ -105,15 +114,19 @@ class ProductController {
                 return res.status(404).json({ message: 'Produto não encontrado.' });
             }
     
-            await Product.findByIdAndUpdate(id, {
+            const updatedProduct = {
                 name,
                 category,
                 price,
-                image,
                 updatedAt: Date.now(),
                 removedAt: null
-            });
+            };
     
+            if (image) {
+                updatedProduct.image = image;
+            }
+    
+            await Product.findByIdAndUpdate(id, updatedProduct);
             return res.status(200).send({ message: 'Produto modificado com sucesso.' });
         } catch (error) {
             return res.status(500).json({ message: 'Não foi possível modificar o produto.', data: error.message });
