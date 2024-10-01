@@ -3,6 +3,6 @@ const orderController = require('../controller/orderController.js');
 
 const orderRouter = express.Router();
 
-orderRouter.post('/api/order', orderController.createOrder);
+orderRouter.post('/api/order/:tableNum', orderController.createOrder);
 
 module.exports = orderRouter;
