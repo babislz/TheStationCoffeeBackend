@@ -3,7 +3,9 @@ const { Table } = require("../model/table");
 
 class OrderController {
   static async createOrder(req, res) {
-    const { products, tableId } = req.body;
+    const { products } = req.body;
+    const { tableNum } = req.params;
+
     if (products.lenght <= 0) {
       return res
         .status(400)
@@ -11,12 +13,14 @@ class OrderController {
     }
 
     try {
-        const table = await Table.findById(tableId);
+        console.log(tableNum)
+        const table = await Table.findOne({tableNumber: tableNum });
+        console.log(table)
         if (!table) {
             return res.status(404).json({ mesasge: "Mesa não encontrada" });
         }
 
-        let order = await Order.findOne({table: tableId})
+        let order = await Order.findOne({table: table._id})
         
         if (!order) {
             order = new Order({
@@ -35,7 +39,7 @@ class OrderController {
         res.status(500).json({ message: err.message });
     }
 
-  }
+    }
 }
 
 module.exports = OrderController;
