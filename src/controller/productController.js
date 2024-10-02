@@ -2,8 +2,7 @@ const { Product } = require('../model/product');
 
 class ProductController {
     static async create(req, res) {
-        const { name, category, price } = req.body;
-        let image;
+        const { name, category, price, image } = req.body;
 
         if (req.file) {
             image = req.file.path;
