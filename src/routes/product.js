@@ -13,6 +13,6 @@ productRouter
     .get('', authorize(['admin', 'staff', 'client']), productController.getAllProducts)
     .delete('/:id', authorize('admin'), productController.deleteProductById)
     .delete('', authorize('admin'), productController.deleteAllProducts)
-    .put('/product/:id', authorize('admin'), upload.single('image'), productController.updateProdById)
+    .put('/:id', authorize('admin'), upload.single('image'), productController.updateProdById)
 
 module.exports = productRouter;

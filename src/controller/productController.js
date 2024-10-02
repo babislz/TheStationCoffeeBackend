@@ -54,7 +54,7 @@ class ProductController {
 
     static async getAllProducts(req, res) {
         try {
-            const products = await Product.find(); 
+            const products = await Product.find();
             return res.status(200).json(products);
         } catch (error) {
             return res.status(500).json({ message: 'Erro ao buscar produtos.', data: error.message });
@@ -95,19 +95,16 @@ class ProductController {
     
     static async updateProdById(req, res) {
         const { id } = req.params;
-        const { name, category, price } = req.body;
-        let image;
+        const { name, category, price, image } = req.body;
     
-        if (req.file) {
-            image = req.file.path;
-        }
-    
+
         if (!id) {
             return res.status(400).json({ message: 'ID do produto não fornecido.' });
         }
     
         try {
             const product = await Product.findById(id);
+            console.log(product)
             
             if (!product) {
                 return res.status(404).json({ message: 'Produto não encontrado.' });
@@ -118,13 +115,10 @@ class ProductController {
                 category,
                 price,
                 updatedAt: Date.now(),
-                removedAt: null
-            };
-    
-            if (image) {
-                updatedProduct.image = image;
+                removedAt: null,
+                image
             }
-    
+            
             await Product.findByIdAndUpdate(id, updatedProduct);
             return res.status(200).send({ message: 'Produto modificado com sucesso.' });
         } catch (error) {
