@@ -47,7 +47,6 @@ class UserController {
         const role = req.query.role;
         try {
             const user = await User.findOne({ role });
-            console.log(user.id)
             res.json(user.id);
         } catch (err) {
             res.status(500).json({ error: err.message });
