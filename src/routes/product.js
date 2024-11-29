@@ -9,7 +9,7 @@ productRouter.use(authenticate);
 
 productRouter
     .post('', authorize('admin'), productController.create)
-    .get('/:id', authorize('admin'), productController.getProdById)
+    .get('/:id', productController.getProdById)
     .get('', authorize(['admin', 'staff', 'client']), productController.getAllProducts)
     .delete('/:id', authorize('admin'), productController.deleteProductById)
     .delete('', authorize('admin'), productController.deleteAllProducts)
